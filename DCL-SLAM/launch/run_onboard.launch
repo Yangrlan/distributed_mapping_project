@@ -1,0 +1,16 @@
+<launch>
+	<arg name="set_lio_type" default="2"/> <!-- 1 for LIO-SAM
+												2 for FAST-LIO2 -->
+	<param name="/number_of_robots" value="1"/>
+	<arg name="set_respawn_value" default="false"/>  <!-- boolean: true, false -->
+	
+	<!-- Robot list -->
+  	<include file="$(find dcl_slam)/launch/single_ugv.launch">
+    	<arg name="robotPrefix" value="a"/>
+		<arg name="respawnValue" value="$(arg set_respawn_value)"/>
+		<arg name="lioType" value="$(arg set_lio_type)"/>
+  	</include>
+
+
+
+</launch>

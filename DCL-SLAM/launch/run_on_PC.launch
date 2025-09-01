@@ -1,0 +1,58 @@
+<launch>
+	<arg name="set_lio_type" default="1"/> <!-- 1 for LIO-SAM
+												2 for FAST-LIO2 -->
+	<param name="/number_of_robots" value="5"/>
+	<arg name="set_respawn_value" default="false"/>  <!-- boolean: true, false -->
+
+
+	<!-- Robot list -->
+  	<include file="$(find dcl_slam)/launch/single_ugv.launch">
+    	<arg name="robotPrefix" value="a"/>
+		<arg name="respawnValue" value="$(arg set_respawn_value)"/>
+		<arg name="lioType" value="$(arg set_lio_type)"/>
+  	</include>
+  	
+  	<include file="$(find dcl_slam)/launch/single_ugv.launch">
+    	<arg name="robotPrefix" value="b"/>
+		<arg name="respawnValue" value="$(arg set_respawn_value)"/>
+		<arg name="lioType" value="$(arg set_lio_type)"/>
+  	</include>
+  	
+  	<include file="$(find dcl_slam)/launch/single_ugv.launch">
+    	<arg name="robotPrefix" value="c"/>
+		<arg name="respawnValue" value="$(arg set_respawn_value)"/>
+		<arg name="lioType" value="$(arg set_lio_type)"/>
+  	</include>
+
+	<include file="$(find dcl_slam)/launch/single_ugv.launch">
+    	<arg name="robotPrefix" value="d"/>
+		<arg name="respawnValue" value="$(arg set_respawn_value)"/>
+		<arg name="lioType" value="$(arg set_lio_type)"/>
+  	</include>
+
+	<include file="$(find dcl_slam)/launch/single_ugv.launch">
+    	<arg name="robotPrefix" value="e"/>
+		<arg name="respawnValue" value="$(arg set_respawn_value)"/>
+		<arg name="lioType" value="$(arg set_lio_type)"/>
+  	</include>
+  	
+
+	<node pkg="rviz" type="rviz" name="dcl_rviz" args="-d $(find dcl_slam)/config/dcl_rviz.rviz" />
+
+	<remap from="/Alpha/velodyne_points" to="/a/velodyne_points"/>
+	<remap from="/Bob/velodyne_points" to="/b/velodyne_points"/>
+	<remap from="/Carol/velodyne_points" to="/c/velodyne_points"/>
+	<remap from="/Donald/velodyne_points" to="/d/velodyne_points"/>
+	<remap from="/Eric/velodyne_points" to="/e/velodyne_points"/>
+
+
+	<remap from="/Alpha/imu/data" to="/a/imu/data"/>
+	<remap from="/Bob/imu/data" to="/b/imu/data"/>
+	<remap from="/Carol/imu/data" to="/c/imu/data"/>
+	<remap from="/Donald/imu/data" to="/d/imu/data"/>
+	<remap from="/Eric/imu/data" to="/e/imu/data"/>
+
+	<arg name="SYSU_bag" value="$(env HOME)/cslam_ws/five_robots.bag"/>
+  	<node name="player" pkg="rosbag" type="play" output="screen" args="$(arg SYSU_bag) --quiet"/>
+
+</launch>
